@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "es2019",
+    "sourceMap": true,
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "declaration": true,
+    "resolveJsonModule": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "skipLibCheck": true,
+    "outDir": "../../build/server",
+    "lib": ["es2019"],
+    "paths": {
+      "*": ["../../node_modules/*"],
+      "@shared": ["../shared"]
+    },
+    "moduleResolution": "node",
+    "types": ["node"],
+    "incremental": true,
+    "composite": true
+  },
+  "include": ["**/*.ts"],
+  "references": [
+    {
+      "path": "../shared"
+    }
+  ]
+}
