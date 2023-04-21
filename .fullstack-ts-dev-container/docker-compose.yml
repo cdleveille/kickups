@@ -1,0 +1,23 @@
+version: "3.6"
+
+services:
+  # mongo service
+  fullstack-ts-mongodb-local:
+    image: mongo:latest
+    container_name: fullstack-ts-mongodb-local
+    command: mongod --port 27007
+    ports:
+      - 27007:27007
+    expose:
+      - 27007
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - mongo_net
+
+volumes:
+  mongo-data:
+
+networks:
+  mongo_net:
+    driver: bridge
