@@ -8,9 +8,9 @@ export class Ball {
 	radius: number;
 	g: number;
 	bounceRatio: number;
+	rollDecel: number;
 
 	constructor() {
-		this.g = 4000;
 		this.bounceRatio = 0.75;
 	}
 
@@ -21,12 +21,16 @@ export class Ball {
 		this.yv = 0;
 	}
 
-	resize(newWidth: number, scaleRatio: number) {
-		const oldWidth = this.radius / scaleRatio;
+	resize(newWidth: number, radiusRatio: number, scaleRatio: number) {
+		const oldWidth = this.radius / radiusRatio;
 		const ratio = newWidth / oldWidth;
 		this.x *= ratio;
 		this.y *= ratio;
-		this.radius = newWidth * scaleRatio;
+		this.xv *= scaleRatio;
+		this.yv *= scaleRatio;
+		this.g = 5000 * scaleRatio;
+		this.rollDecel = 1 * scaleRatio;
+		this.radius = newWidth * radiusRatio;
 	}
 
 	update(delta: number) {

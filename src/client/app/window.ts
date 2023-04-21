@@ -48,7 +48,6 @@ export class WindowHandler {
 				xOffset: 0,
 				yOffset: (window.innerHeight - heightUsingMaxWidth) / 2
 			} as IResize;
-
 		const widthUsingMaxHeight = Math.floor(window.innerHeight * (widthRatio / heightRatio));
 		return {
 			width: widthUsingMaxHeight,

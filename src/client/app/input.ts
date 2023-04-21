@@ -7,10 +7,13 @@ export class InputHandler {
 		};
 
 		canvas.addEventListener("mousedown", e => {
-			e.preventDefault();
-			const x = e.clientX - game.xOffset;
-			const y = e.clientY - game.yOffset;
-			game.onClick(x, y);
+			if (e.button !== 0) return;
+			const { x, y } = this.getMousePos(e, game);
+			game.onKick(x, y);
 		});
+	}
+
+	getMousePos(e: MouseEvent, game: Game) {
+		return { x: e.clientX - game.xOffset, y: e.clientY - game.yOffset };
 	}
 }
