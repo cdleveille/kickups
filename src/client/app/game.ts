@@ -11,14 +11,21 @@ export class Game {
 	radiusRatio: number;
 	scaleRatio: number;
 	mousePos: { x: number; y: number };
+	score: number;
+	setScore: (score: number) => void;
 
-	constructor() {
+	constructor(setScore: (score: number) => void) {
 		this.ball = new Ball();
 		this.radiusRatio = 1 / 10;
+		this.setScore = (score: number) => {
+			this.score = score;
+			setScore(score);
+		};
 	}
 
 	init() {
 		this.ball.init(this.width / 2, this.height / 3);
+		this.setScore(0);
 	}
 
 	resize(screen: IResize) {
@@ -34,7 +41,7 @@ export class Game {
 	update(delta: number) {
 		this.ball.update(delta);
 		this.checkForHover();
-		this.checkForCollision(this.ball);
+		this.checkForCollision(this.ball, delta);
 	}
 
 	updateMousePos(pos: { x: number; y: number }) {
@@ -49,15 +56,24 @@ export class Game {
 		document.body.style.cursor = hovering ? "pointer" : "default";
 	}
 
-	checkForCollision(ball: Ball) {
+	checkForCollision(ball: Ball, delta: number) {
 		if (this.isBallCollidingWithFloor(ball)) {
+			if (this.score != 0) this.setScore(0);
 			ball.y = this.height - this.floorHeight - ball.radius;
-			ball.yv = -ball.yv * ball.bounceRatio;
+
+			if (!this.ball.isStoppedVertical) {
+				if (ball.yv > 20) {
+					ball.yv = -ball.yv * ball.bounceRatio;
+				} else {
+					ball.yv = 0;
+					this.ball.isStoppedVertical = true;
+				}
+			}
 			if (ball.xv > 0) {
-				const newXV = ball.xv - ball.rollDecel;
+				const newXV = ball.xv - ball.rollDecel * delta;
 				ball.xv = newXV > 0 ? newXV : 0;
 			} else if (ball.xv < 0) {
-				const newXV = ball.xv + ball.rollDecel;
+				const newXV = ball.xv + ball.rollDecel * delta;
 				ball.xv = newXV < 0 ? newXV : 0;
 			}
 		}
@@ -78,6 +94,8 @@ export class Game {
 	onKick(pos: { x: number; y: number }) {
 		const { x, y } = pos;
 		if (getDistanceBetweenPoints({ x, y }, { x: this.ball.x, y: this.ball.y }) > this.ball.radius) return;
+		this.ball.isStoppedVertical = false;
+		this.setScore(this.score + 1);
 		const xBoostPct = (x - this.ball.x) / this.ball.radius;
 		const yBoostPct = (y - this.ball.y + this.ball.radius) / (this.ball.radius * 2);
 		this.ball.xv = -800 * this.scaleRatio * xBoostPct;
@@ -95,5 +113,10 @@ export class Game {
 		ctx.fillRect(this.xOffset, this.yOffset + this.height - this.floorHeight, this.width, this.floorHeight);
 
 		this.ball.draw(ctx, this.xOffset, this.yOffset);
+
+		if (this.yOffset > 0) {
+			ctx.fillStyle = Color.GRAY;
+			ctx.fillRect(0, 0, window.innerWidth, this.yOffset);
+		}
 	}
 }

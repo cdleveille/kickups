@@ -13,5 +13,5 @@ export const Canvas = ({ game }: ICanvasProps) => {
 		})();
 	}, []);
 
-	return <canvas ref={ref} />;
+	return <canvas id="game-canvas" ref={ref} />;
 };

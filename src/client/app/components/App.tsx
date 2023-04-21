@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 
 import { Game } from "@app";
-import { Canvas } from "@components";
+import { Canvas, Score } from "@components";
 
 export const App = () => {
-	const [game] = useState<Game>(new Game());
+	const [score, setScore] = useState<number>(0);
+	const [game] = useState<Game>(new Game(setScore));
 
 	return (
 		<>
 			<Canvas game={game} />
+			<Score score={score} />
 		</>
 	);
 };
