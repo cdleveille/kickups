@@ -3,8 +3,8 @@ import "dotenv/config";
 import { Env, Host } from "../types";
 
 export const Config = {
-	IS_PROD: <boolean>(process.env.NODE_ENV === Env.prod),
+	IS_PROD: <boolean>(process.env.NODE_ENV === Env.PROD),
 	PORT: <number>parseInt(process.env.PORT || "3000"),
-	HOST: <string>(process.env.NODE_ENV === Env.prod ? Host.prod : Host.dev),
-	MONGO_URI: <string>process.env.MONGO_URI || "mongodb://localhost:27007/fullstack-ts"
+	HOST: <string>(process.env.NODE_ENV === Env.PROD ? Host.PROD : Host.DEV),
+	MONGO_URI: <string>process.env.MONGO_URI || "mongodb://localhost:27057/kickups"
 };

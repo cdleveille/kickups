@@ -1,6 +1,4 @@
-# fullstack-ts
-
-MERN stack monorepo template with types shared between server and client.
+# kickups
 
 ## Prerequisites
 
@@ -14,7 +12,7 @@ MERN stack monorepo template with types shared between server and client.
 -   Clone repo and open in VS Code
 -   Install yarn: `npm i -g yarn`
 -   Install package dependencies: `yarn`
--   Launch Docker Desktop. In VS Code, right-click `.fullstack-ts-dev-container\docker-compose.yml` and select `Compose Up` to initialize database container.
+-   Launch Docker Desktop. In VS Code, right-click `.kickups-dev-container\docker-compose.yml` and select `Compose Up` to initialize database container.
 -   Press `F5` or run `yarn dev` to run in dev mode (server and client restart on file save)
 -   Client will be served on [localhost:3000](http://localhost:3000/)
 

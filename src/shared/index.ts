@@ -9,8 +9,7 @@ export interface IBase {
 	updated_at: Date;
 }
 
-export interface IUser extends IBase {
-	username: string;
-	password: string;
-	email: string;
+export interface IScore extends IBase {
+	user: string;
+	score: number;
 }

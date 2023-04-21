@@ -1,6 +1,6 @@
 import { FilterQuery, Model, PopulateOptions, QueryOptions } from "mongoose";
 
-import { IBase, IUser } from "@shared";
+import { IBase, IScore } from "@shared";
 
 export interface IBaseModel<T extends IBase = IBase> extends Model<T> {
 	assertFindOne(filter?: FilterQuery<T>, options?: Options<T>, projection?: Projection): Promise<T>;
@@ -10,7 +10,7 @@ export interface IBaseModel<T extends IBase = IBase> extends Model<T> {
 	getCount(filter: FilterQuery<T>, options?: Options<T>): Promise<number>;
 }
 
-export type IUserModel = IBaseModel<IUser>;
+export type IScoreModel = IBaseModel<IScore>;
 
 export type Projection = Record<string, 0 | 1>;
 

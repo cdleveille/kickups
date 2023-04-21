@@ -37,7 +37,7 @@ export const startServer = async () => {
 			methods: ["GET", "POST", "PUT", "DELETE"]
 		})
 	);
-	app.use(Routes.root, router);
+	app.use(Routes.ROOT, router);
 	app.use(express.static(path.join(process.cwd(), "build/client")));
 	app.set("json spaces", 2);
 	app.disable("x-powered-by");
@@ -46,7 +46,7 @@ export const startServer = async () => {
 	initSocket(httpServer);
 	httpServer.listen(Config.PORT, () => {
 		log.info(
-			`Server started in ${Config.IS_PROD ? Env.prod : Env.dev} mode${
+			`Server started in ${Config.IS_PROD ? Env.PROD : Env.DEV} mode${
 				Config.IS_PROD ? "." : ` - listening on http://${Config.HOST}:${Config.PORT}`
 			}`
 		);

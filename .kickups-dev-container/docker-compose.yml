@@ -2,14 +2,14 @@ version: "3.6"
 
 services:
   # mongo service
-  fullstack-ts-mongodb-local:
+  kickups-mongodb-local:
     image: mongo:latest
-    container_name: fullstack-ts-mongodb-local
-    command: mongod --port 27007
+    container_name: kickups-mongodb-local
+    command: mongod --port 27057
     ports:
-      - 27007:27007
+      - 27057:27057
     expose:
-      - 27007
+      - 27057
     volumes:
       - mongo-data:/data/db
     networks:

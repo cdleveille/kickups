@@ -1,7 +1,7 @@
 import React from "react";
 
-import { Header } from "@components";
+import { App } from "@components";
 
 export const Index = () => {
-	return <Header text="Hello World!" />;
+	return <App />;
 };

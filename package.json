@@ -1,10 +1,10 @@
 {
-  "name": "fullstack-ts",
+  "name": "kickups",
   "version": "1.0.0",
   "main": "build/server/index.js",
-  "repository": "https://github.com/cdleveille/fullstack-ts.git",
+  "repository": "https://github.com/cdleveille/kickups.git",
   "author": "Chris Leveille <cdleveille@gmail.com>",
-  "description": "MERN stack monorepo template with types shared between server and client.",
+  "description": "",
   "license": "MIT",
   "scripts": {
     "prepare": "husky install",

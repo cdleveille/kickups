@@ -1,17 +1,15 @@
 /* eslint-disable no-unused-vars */
 
 export enum Host {
-	dev = "localhost",
-	prod = "?"
+	DEV = "localhost",
+	PROD = "?"
 }
 
 export enum Env {
-	dev = "development",
-	prod = "production"
+	DEV = "development",
+	PROD = "production"
 }
 
 export enum Routes {
-	root = "/",
-	helloWorld = "/helloworld",
-	user = "/user"
+	ROOT = "/"
 }

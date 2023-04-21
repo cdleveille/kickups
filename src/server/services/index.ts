@@ -1,3 +1,3 @@
-export { connectToDatabase } from "./db";
-export { log } from "./log";
-export { startServer } from "./server";
+export * from "./db";
+export * from "./log";
+export * from "./server";

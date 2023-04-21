@@ -61,6 +61,7 @@ export default {
 		extensions: [".ts", ".tsx", ".js", ".jsx"],
 		alias: {
 			"socket.io-client": path.resolve(__dirname, "node_modules/socket.io-client/dist/socket.io.js"),
+			"@app": path.resolve(__dirname, "./src/client/app"),
 			"@components": path.resolve(__dirname, "./src/client/app/components"),
 			"@pages": path.resolve(__dirname, "./src/client/app/pages"),
 			"@shared": path.resolve(__dirname, "./src/shared"),

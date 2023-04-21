@@ -1,7 +1,7 @@
 import { FilterQuery, Schema } from "mongoose";
 
 import { IBase } from "@shared";
-import { Errors, IBaseModel, Options, Projection } from "@types";
+import { IBaseModel, NotFoundError, Options, Projection } from "@types";
 
 export const BaseSchema = new Schema<IBase, IBaseModel>({
 	created_at: {
@@ -18,12 +18,12 @@ export const BaseSchema = new Schema<IBase, IBaseModel>({
 const statics = {
 	assertFindOne: async function (filter?: FilterQuery<IBase>, options?: Options, projection?: Projection) {
 		const doc = await this.findOne(filter, projection, options);
-		if (!doc) throw new Errors.NotFoundError(`${this.modelName} not found`);
+		if (!doc) throw new NotFoundError(`${this.modelName} not found`);
 		return doc;
 	},
 	assertFind: async function (filter?: FilterQuery<IBase>, options?: Options, projection?: Projection) {
 		const docs = await this.find(filter, options, projection);
-		if (docs.length <= 0) throw new Errors.NotFoundError(`${this.modelName}s not found`);
+		if (docs.length <= 0) throw new NotFoundError(`${this.modelName}s not found`);
 		return docs;
 	},
 	createOrUpdate: async function (filter: FilterQuery<IBase>, doc: Partial<IBase>) {
@@ -36,7 +36,7 @@ const statics = {
 	},
 	assertExists: async function (filter: FilterQuery<IBase>, options?: Options) {
 		const count = await this.getCount(filter, options);
-		if (count <= 0) throw new Errors.NotFoundError(`${this.modelName} does not exist`);
+		if (count <= 0) throw new NotFoundError(`${this.modelName} does not exist`);
 	}
 } as IBaseModel;
 

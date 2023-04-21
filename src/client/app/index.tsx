@@ -6,6 +6,13 @@ import { io } from "socket.io-client";
 
 import { Index } from "@pages";
 
+export * from "./ball";
+export * from "./game";
+export * from "./input";
+export * from "./start";
+export * from "./util";
+export * from "./window";
+
 window.addEventListener("load", async () => {
 	// @ts-ignore
 	if (!navigator.serviceWorker) return;
