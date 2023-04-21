@@ -10,6 +10,7 @@ export class Game {
 	ball: Ball;
 	radiusRatio: number;
 	scaleRatio: number;
+	mousePos: { x: number; y: number };
 
 	constructor() {
 		this.ball = new Ball();
@@ -27,13 +28,25 @@ export class Game {
 		this.yOffset = screen.yOffset;
 		this.floorHeight = this.height / 5;
 		this.scaleRatio = this.height / 929;
-
 		this.ball.resize(this.width, this.radiusRatio, this.scaleRatio);
 	}
 
 	update(delta: number) {
 		this.ball.update(delta);
+		this.checkForHover();
 		this.checkForCollision(this.ball);
+	}
+
+	updateMousePos(pos: { x: number; y: number }) {
+		this.mousePos = pos;
+	}
+
+	checkForHover() {
+		if (!this.mousePos) return;
+		const hovering =
+			getDistanceBetweenPoints({ x: this.mousePos.x, y: this.mousePos.y }, { x: this.ball.x, y: this.ball.y }) <=
+			this.ball.radius;
+		document.body.style.cursor = hovering ? "pointer" : "default";
 	}
 
 	checkForCollision(ball: Ball) {
@@ -62,8 +75,9 @@ export class Game {
 		return ball.x - ball.radius <= 0 || ball.x + ball.radius >= this.width;
 	}
 
-	onKick(x: number, y: number) {
-		if (getDistanceBetweenPoints(x, y, this.ball.x, this.ball.y) > this.ball.radius) return;
+	onKick(pos: { x: number; y: number }) {
+		const { x, y } = pos;
+		if (getDistanceBetweenPoints({ x, y }, { x: this.ball.x, y: this.ball.y }) > this.ball.radius) return;
 		const xBoostPct = (x - this.ball.x) / this.ball.radius;
 		const yBoostPct = (y - this.ball.y + this.ball.radius) / (this.ball.radius * 2);
 		this.ball.xv = -800 * this.scaleRatio * xBoostPct;

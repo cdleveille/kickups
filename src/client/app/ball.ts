@@ -1,4 +1,4 @@
-import { Color } from "@types";
+import { ballImg } from "@app";
 
 export class Ball {
 	x: number;
@@ -40,9 +40,12 @@ export class Ball {
 	}
 
 	draw(ctx: CanvasRenderingContext2D, offsetX: number, offsetY: number) {
-		ctx.fillStyle = Color.RED;
-		ctx.beginPath();
-		ctx.arc(this.x + offsetX, this.y + offsetY, this.radius, 0, 2 * Math.PI, false);
-		ctx.fill();
+		ctx.drawImage(
+			ballImg as unknown as CanvasImageSource,
+			this.x + offsetX - this.radius,
+			this.y + offsetY - this.radius,
+			this.radius * 2,
+			this.radius * 2
+		);
 	}
 }

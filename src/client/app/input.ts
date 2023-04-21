@@ -8,8 +8,11 @@ export class InputHandler {
 
 		canvas.addEventListener("mousedown", e => {
 			if (e.button !== 0) return;
-			const { x, y } = this.getMousePos(e, game);
-			game.onKick(x, y);
+			game.onKick(this.getMousePos(e, game));
+		});
+
+		canvas.addEventListener("mousemove", e => {
+			game.updateMousePos(this.getMousePos(e, game));
 		});
 	}
 

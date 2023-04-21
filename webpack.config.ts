@@ -1,5 +1,6 @@
 /** https://webpack.js.org/configuration/ */
 
+import CopyPlugin from "copy-webpack-plugin";
 import fs from "fs";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import path from "path";
@@ -18,14 +19,14 @@ const packageJson = JSON.parse(fs.readFileSync("package.json").toString()) as {
 export default {
 	mode: Config.IS_PROD ? "production" : "development",
 	entry: {
-		main: path.resolve(__dirname, "./src/client/app/index.tsx")
+		main: path.resolve(__dirname, "src/client/app/index.tsx")
 	},
 	devtool: Config.IS_PROD ? false : "inline-source-map",
 	module: {
 		rules: [
 			{
 				test: /\.[jt]sx?$/i,
-				include: [path.resolve(__dirname, "./src/client"), path.resolve(__dirname, "./src/shared")],
+				include: [path.resolve(__dirname, "src/client"), path.resolve(__dirname, "src/shared")],
 				use: [
 					{
 						loader: "babel-loader",
@@ -40,12 +41,12 @@ export default {
 			},
 			{
 				test: /\.css$/i,
-				include: path.resolve(__dirname, "./src/client"),
+				include: path.resolve(__dirname, "src/client"),
 				use: ["style-loader", "css-loader"]
 			},
 			{
 				test: /\.(png|svg|jpg|jpeg|gif|webp|ttf)$/i,
-				include: path.resolve(__dirname, "./src/client"),
+				include: path.resolve(__dirname, "src/client"),
 				type: "asset/resource"
 			}
 		]
@@ -61,11 +62,11 @@ export default {
 		extensions: [".ts", ".tsx", ".js", ".jsx"],
 		alias: {
 			"socket.io-client": path.resolve(__dirname, "node_modules/socket.io-client/dist/socket.io.js"),
-			"@app": path.resolve(__dirname, "./src/client/app"),
-			"@components": path.resolve(__dirname, "./src/client/app/components"),
-			"@pages": path.resolve(__dirname, "./src/client/app/pages"),
-			"@shared": path.resolve(__dirname, "./src/shared"),
-			"@types": path.resolve(__dirname, "./src/client/app/types")
+			"@app": path.resolve(__dirname, "src/client/app"),
+			"@components": path.resolve(__dirname, "src/client/app/components"),
+			"@pages": path.resolve(__dirname, "src/client/app/pages"),
+			"@shared": path.resolve(__dirname, "src/shared"),
+			"@types": path.resolve(__dirname, "src/client/app/types")
 		}
 	},
 	target: ["web", "es5"],
@@ -84,8 +85,33 @@ export default {
 	},
 	plugins: [
 		new InjectManifest({
-			swSrc: path.resolve(__dirname, "./src/client/sw.ts"),
+			swSrc: path.resolve(__dirname, "src/client/sw.ts"),
 			maximumFileSizeToCacheInBytes: 5000000
+		}),
+
+		new CopyPlugin({
+			patterns: [
+				{
+					from: path.resolve(__dirname, "src/client"),
+					to: path.resolve(__dirname, "build/client"),
+					toType: "dir",
+					globOptions: {
+						ignore: [
+							"**/*.ts",
+							"**/tsconfig.json",
+							"**/*.html",
+							"**/css/**/*",
+							"**/font/**/*",
+							"**/img/**/*"
+						]
+					}
+				},
+				{
+					from: path.resolve(__dirname, "src/client/img/icons"),
+					to: path.resolve(__dirname, "build/client/icons"),
+					toType: "dir"
+				}
+			]
 		}),
 
 		new HtmlWebpackPlugin({
@@ -93,7 +119,7 @@ export default {
 			description: packageJson.description,
 			author: packageJson.author,
 			filename: "index.html",
-			template: path.resolve(__dirname, "./src/client/_index.html")
+			template: path.resolve(__dirname, "src/client/_index.html")
 		}),
 
 		Config.IS_PROD &&

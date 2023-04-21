@@ -8,6 +8,7 @@ import { Index } from "@pages";
 
 export * from "./ball";
 export * from "./game";
+export * from "./img";
 export * from "./input";
 export * from "./start";
 export * from "./util";
