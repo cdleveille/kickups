@@ -1,4 +1,4 @@
-import { Ball, getDistanceBetweenPoints } from "@app";
+import { backgroundImg, Ball, getDistanceBetweenPoints } from "@app";
 import { Color, IResize } from "@types";
 
 export class Game {
@@ -13,19 +13,29 @@ export class Game {
 	mousePos: { x: number; y: number };
 	score: number;
 	setScore: (score: number) => void;
+	setScoreBottom: (bottom: number) => void;
+	setScoreFontSize: (fontSize: number) => void;
+	shadow: { opacity: number; radius: number };
 
-	constructor(setScore: (score: number) => void) {
+	constructor(
+		setScore: (score: number) => void,
+		setScoreBottom: (bottom: number) => void,
+		setScoreFontSize: (fontSize: number) => void
+	) {
 		this.ball = new Ball();
-		this.radiusRatio = 1 / 10;
+		this.radiusRatio = 1 / 12;
 		this.setScore = (score: number) => {
 			this.score = score;
 			setScore(score);
 		};
+		this.setScoreBottom = setScoreBottom;
+		this.setScoreFontSize = setScoreFontSize;
 	}
 
 	init() {
 		this.ball.init(this.width / 2, this.height / 3);
 		this.setScore(0);
+		this.shadow = { opacity: 0.2, radius: 9 };
 	}
 
 	resize(screen: IResize) {
@@ -36,12 +46,14 @@ export class Game {
 		this.floorHeight = this.height / 5;
 		this.scaleRatio = this.height / 929;
 		this.ball.resize(this.width, this.radiusRatio, this.scaleRatio);
+		this.setScoreBottom(this.yOffset);
+		this.setScoreFontSize(100 * this.scaleRatio);
 	}
 
 	update(delta: number) {
 		this.ball.update(delta);
 		this.checkForHover();
-		this.checkForCollision(this.ball, delta);
+		this.checkForCollisions(this.ball, delta);
 	}
 
 	updateMousePos(pos: { x: number; y: number }) {
@@ -56,13 +68,13 @@ export class Game {
 		document.body.style.cursor = hovering ? "pointer" : "default";
 	}
 
-	checkForCollision(ball: Ball, delta: number) {
+	checkForCollisions(ball: Ball, delta: number) {
 		if (this.isBallCollidingWithFloor(ball)) {
 			if (this.score != 0) this.setScore(0);
 			ball.y = this.height - this.floorHeight - ball.radius;
 
 			if (!this.ball.isStoppedVertical) {
-				if (ball.yv > 20) {
+				if (ball.yv > 20 * this.scaleRatio) {
 					ball.yv = -ball.yv * ball.bounceRatio;
 				} else {
 					ball.yv = 0;
@@ -109,8 +121,29 @@ export class Game {
 		ctx.fillStyle = Color.WHITE;
 		ctx.fillRect(this.xOffset, this.yOffset, this.width, this.height);
 
-		ctx.fillStyle = Color.GREEN;
-		ctx.fillRect(this.xOffset, this.yOffset + this.height - this.floorHeight, this.width, this.floorHeight);
+		ctx.drawImage(
+			backgroundImg as unknown as CanvasImageSource,
+			this.xOffset,
+			this.yOffset,
+			this.width,
+			this.height
+		);
+
+		ctx.fillStyle = `rgba(0, 0, 0, ${this.shadow.opacity})`;
+		ctx.save();
+		ctx.scale(5, 1);
+		ctx.beginPath();
+		ctx.arc(
+			(this.ball.x + this.xOffset) / 5,
+			this.height - this.floorHeight + this.yOffset,
+			this.shadow.radius * this.scaleRatio,
+			0,
+			Math.PI * 2,
+			false
+		);
+		ctx.fill();
+		ctx.closePath();
+		ctx.restore();
 
 		this.ball.draw(ctx, this.xOffset, this.yOffset);
 

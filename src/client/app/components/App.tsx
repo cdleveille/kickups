@@ -5,12 +5,14 @@ import { Canvas, Score } from "@components";
 
 export const App = () => {
 	const [score, setScore] = useState<number>(0);
-	const [game] = useState<Game>(new Game(setScore));
+	const [scoreBottom, setScoreBottom] = useState<number>();
+	const [scoreFontSize, setScoreFontSize] = useState<number>();
+	const [game] = useState<Game>(new Game(setScore, setScoreBottom, setScoreFontSize));
 
 	return (
 		<>
 			<Canvas game={game} />
-			<Score score={score} />
+			<Score score={score} bottom={scoreBottom} fontSize={scoreFontSize} />
 		</>
 	);
 };

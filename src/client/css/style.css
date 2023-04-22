@@ -4,16 +4,22 @@
 	padding: 0;
 }
 
+@font-face {
+	font-family: "ride-the-fader";
+	font-style: "normal";
+	font-weight: 800;
+	src: local("ride-the-fader"), url("../font/RideTheFader-1XKg.ttf") format("truetype");
+}
+
 body {
 	overflow: hidden;
 }
 
 #score {
+	font-family: "ride-the-fader";
 	position: absolute;
-	top: 10px;
-	left: 10px;
-	font-size: 48px;
-	width: 200px;
-	height: 100px;
 	color: aqua;
+	user-select: none;
+	width: 101%;
+	text-align: center;
 }
