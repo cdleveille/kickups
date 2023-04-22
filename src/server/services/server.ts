@@ -14,7 +14,7 @@ import { Env, Routes } from "@types";
 
 export const startServer = async () => {
 	const app = express();
-	await connectToDatabase();
+	if (!Config.SKIP_DB) await connectToDatabase();
 
 	const logStream = fs.createWriteStream("requests.log", { flags: "a" });
 	app.use(morgan("combined", { stream: logStream }));
