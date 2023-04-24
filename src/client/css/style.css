@@ -7,12 +7,43 @@
 @font-face {
 	font-family: "ride-the-fader";
 	font-style: "normal";
-	font-weight: 800;
 	src: local("ride-the-fader"), url("../font/RideTheFader-1XKg.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "november";
+	font-style: "normal";
+	src: local("november"), url("../font/november.ttf") format("truetype");
 }
 
 body {
 	overflow: hidden;
+}
+
+.centered {
+	position: absolute;
+	-moz-transform: translateX(-50%) translateY(-50%);
+	-webkit-transform: translateX(-50%) translateY(-50%);
+	-ms-transform: translateX(-50%) translateY(-50%);
+	transform: translateX(-50%) translateY(-50%);
+}
+
+#initials-input {
+	z-index: 10;
+	top: 50%;
+	left: 50%;
+	color: #00ffff;
+	font-size: 100px;
+	width: 182px;
+	background-color: rgba(0, 0, 0, 0);
+	outline: none;
+	border: 4px dotted aqua;
+	text-transform: uppercase;
+	pointer-events: all;
+	font-family: "november";
+	padding-top: 12px;
+	padding-left: 12px;
+	padding-right: 12px;
 }
 
 #score {

@@ -9,7 +9,6 @@ export const getDistanceBetweenPoints = (pos1: { x: number; y: number }, pos2: {
 };
 
 export const loadImage = (url: string) => {
-	console.log(url);
 	const img = new Image();
 	img.src = url;
 	return img;

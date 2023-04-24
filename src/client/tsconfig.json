@@ -16,6 +16,7 @@
       "*": ["../../node_modules/*"],
       "@app": ["./app"],
       "@components": ["./app/components"],
+      "@hooks": ["./app/hooks"],
       "@pages": ["./app/pages"],
       "@shared": ["../shared"],
       "@types": ["./app/types"]

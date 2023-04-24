@@ -64,6 +64,7 @@ export default {
 			"socket.io-client": path.resolve(__dirname, "node_modules/socket.io-client/dist/socket.io.js"),
 			"@app": path.resolve(__dirname, "src/client/app"),
 			"@components": path.resolve(__dirname, "src/client/app/components"),
+			"@hooks": path.resolve(__dirname, "src/client/app/hooks"),
 			"@pages": path.resolve(__dirname, "src/client/app/pages"),
 			"@shared": path.resolve(__dirname, "src/shared"),
 			"@types": path.resolve(__dirname, "src/client/app/types")
