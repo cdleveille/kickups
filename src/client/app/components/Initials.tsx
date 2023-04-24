@@ -7,7 +7,7 @@ interface IInitialsProps {
 }
 
 export const Initials = ({ initials, setInitials, scaleRatio }: IInitialsProps) => {
-	const [show, setShow] = useState(true);
+	const [show, setShow] = useState(false);
 	const [inputValue, setInputValue] = useState("");
 
 	if (!show) return null;
