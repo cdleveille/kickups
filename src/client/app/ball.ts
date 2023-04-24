@@ -23,7 +23,7 @@ export class Ball {
 		this.xv = 0;
 		this.yv = 0;
 		this.rotationMagnitude = 0;
-		this.isStoppedVertical = false;
+		this.isStoppedVertical = true;
 	}
 
 	resize(newWidth: number, radiusRatio: number, scaleRatio: number) {

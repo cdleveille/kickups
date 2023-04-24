@@ -9,25 +9,20 @@ export class InputHandler {
 		canvas.addEventListener("touchstart", e => {
 			e.preventDefault();
 			if (e.touches.length > 1) return;
-			const touch = e.touches.item(0);
-			game.onKick(this.getTouchPos(touch, game));
+			game.onKick(InputHandler.getMouseOrTouchPos(e.touches.item(0), game));
 		});
 
 		canvas.addEventListener("mousedown", e => {
 			if (e.button !== 0) return;
-			game.onKick(this.getMousePos(e, game));
+			game.onKick(InputHandler.getMouseOrTouchPos(e, game));
 		});
 
 		canvas.addEventListener("mousemove", e => {
-			game.updateMousePos(this.getMousePos(e, game));
+			game.updateMousePos(InputHandler.getMouseOrTouchPos(e, game));
 		});
 	}
 
-	getMousePos(e: MouseEvent, game: Game) {
+	static getMouseOrTouchPos(e: MouseEvent | Touch, game: Game) {
 		return { x: e.clientX - game.xOffset, y: e.clientY - game.yOffset };
-	}
-
-	getTouchPos(touch: Touch, game: Game) {
-		return { x: touch.clientX - game.xOffset, y: touch.clientY - game.yOffset };
 	}
 }

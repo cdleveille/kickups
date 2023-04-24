@@ -33,9 +33,9 @@ export class Game {
 	}
 
 	init() {
-		this.ball.init(this.width / 2, this.height / 3);
+		this.ball.init(this.width / 2, this.height - this.floorHeight - this.ball.radius);
 		this.setScore(0);
-		this.shadow = { opacity: 0.2, radius: 9 };
+		this.updateShadow();
 	}
 
 	resize(screen: IResize) {
@@ -54,6 +54,7 @@ export class Game {
 		this.ball.update(delta);
 		this.checkForHover();
 		this.checkForCollisions(this.ball, delta);
+		this.updateShadow();
 	}
 
 	updateMousePos(pos: { x: number; y: number }) {
@@ -112,6 +113,12 @@ export class Game {
 		const yBoostPct = (y - this.ball.y + this.ball.radius) / (this.ball.radius * 2);
 		this.ball.xv = -800 * this.scaleRatio * xBoostPct;
 		this.ball.yv = -1000 * this.scaleRatio - 800 * this.scaleRatio * yBoostPct;
+	}
+
+	updateShadow() {
+		const opacity = 0.05 + 0.25 * (this.ball.y / (this.height - this.floorHeight));
+		const radius = 10;
+		this.shadow = { opacity, radius };
 	}
 
 	draw(ctx: CanvasRenderingContext2D) {
