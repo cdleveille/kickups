@@ -1,4 +1,4 @@
-import React, { CSSProperties, useState } from "react";
+import React, { CSSProperties, useEffect, useRef, useState } from "react";
 
 interface IInitialsProps {
 	initials: string;
@@ -20,6 +20,15 @@ export const Initials = ({
 	offset
 }: IInitialsProps) => {
 	const [inputValue, setInputValue] = useState("");
+
+	const inputRef = useRef<HTMLInputElement>(null);
+
+	useEffect(() => {
+		if (!inputRef.current) return;
+		console.log("focus");
+		window.scrollTo(0, 0);
+		document.body.scrollTop = 0;
+	});
 
 	const onInput = (e: React.FormEvent<HTMLInputElement>) => {
 		const value = e.currentTarget?.value?.toUpperCase();
@@ -90,6 +99,7 @@ export const Initials = ({
 						value={inputValue}
 						autoFocus={true}
 						style={initialsInputStyle}
+						ref={inputRef}
 					/>
 				</form>
 			)}

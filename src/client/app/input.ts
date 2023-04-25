@@ -2,6 +2,14 @@ import { Game } from "@app";
 
 export class InputHandler {
 	constructor(canvas: HTMLCanvasElement, game: Game) {
+		document.onscroll = e => {
+			e.preventDefault();
+		};
+
+		document.ontouchmove = e => {
+			e.preventDefault();
+		};
+
 		canvas.oncontextmenu = e => {
 			e.preventDefault();
 		};
