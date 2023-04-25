@@ -61,14 +61,14 @@ export const Top = ({ scaleRatio, offset, showTopList, setShowTopList, clearScre
 	};
 
 	const noScoresYetStyle: CSSProperties = {
-		marginTop: `${offset.yOffset + scaleRatio * 280}px`
+		marginTop: `${scaleRatio * 280}px`
 	};
 
 	return (
 		<>
 			{showTopList && (
 				<div id="top-list" className="centered-horizontally" style={topListStyle}>
-					{scores.length === 0 && <div style={noScoresYetStyle}>No scores yet!</div>}
+					{scores.length === 0 && <div style={noScoresYetStyle}>No&nbsp;scores&nbsp;yet!</div>}
 					{scores.map((score, i) => (
 						<TopListItem
 							key={i}
