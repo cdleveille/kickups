@@ -6,10 +6,6 @@ export class InputHandler {
 			e.preventDefault();
 		};
 
-		document.ontouchmove = e => {
-			e.preventDefault();
-		};
-
 		canvas.oncontextmenu = e => {
 			e.preventDefault();
 		};

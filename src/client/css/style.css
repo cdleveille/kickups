@@ -23,8 +23,12 @@
 	src: local("november"), url("../font/november.ttf") format("truetype");
 }
 
-body {
+body,
+html {
 	overflow: hidden;
+	height: 100%;
+	width: 100%;
+	position: fixed;
 }
 
 .centered {
