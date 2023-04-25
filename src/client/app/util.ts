@@ -1,3 +1,5 @@
+import { io } from "socket.io-client";
+
 export const now = (): number => {
 	return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
 };
@@ -13,3 +15,5 @@ export const loadImage = (url: string) => {
 	img.src = url;
 	return img;
 };
+
+export const socket = io();

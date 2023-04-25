@@ -12,15 +12,17 @@ export class Game {
 	scaleRatio: number;
 	mousePos: { x: number; y: number };
 	score: number;
+	shadow: { opacity: number; radius: number };
 	setScore: (score: number) => void;
 	setScaleRatio: (scaleRatio: number) => void;
 	setOffset: (offset: { xOffset: number; yOffset: number }) => void;
-	shadow: { opacity: number; radius: number };
+	endStreak: (score: number) => void;
 
 	constructor(
 		setScore: (score: number) => void,
 		setScaleRatio: (scaleRatio: number) => void,
-		setOffset: (offset: { xOffset: number; yOffset: number }) => void
+		setOffset: (offset: { xOffset: number; yOffset: number }) => void,
+		endStreak: (score: number) => void
 	) {
 		this.ball = new Ball();
 		this.radiusRatio = 1 / 12;
@@ -30,6 +32,7 @@ export class Game {
 		};
 		this.setScaleRatio = setScaleRatio;
 		this.setOffset = setOffset;
+		this.endStreak = endStreak;
 	}
 
 	init() {
@@ -71,7 +74,10 @@ export class Game {
 
 	checkForCollisions(ball: Ball, delta: number) {
 		if (this.isBallCollidingWithFloor(ball)) {
-			if (this.score != 0) this.setScore(0);
+			if (this.score > 0) {
+				this.endStreak(this.score);
+				this.score = 0;
+			}
 			ball.y = this.height - this.floorHeight - ball.radius;
 
 			if (!this.ball.isStoppedVertical) {
@@ -124,9 +130,6 @@ export class Game {
 	draw(ctx: CanvasRenderingContext2D) {
 		ctx.fillStyle = Color.GRAY;
 		ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
-
-		ctx.fillStyle = Color.WHITE;
-		ctx.fillRect(this.xOffset, this.yOffset, this.width, this.height);
 
 		ctx.drawImage(
 			backgroundImg as unknown as CanvasImageSource,

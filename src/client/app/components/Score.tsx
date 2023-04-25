@@ -8,10 +8,11 @@ interface IScoreProps {
 
 export const Score = ({ score, scaleRatio, offset }: IScoreProps) => {
 	const style: CSSProperties = {
-		paddingLeft: `${scaleRatio * 14}px`,
-		bottom: `${offset.yOffset}px`,
-		fontSize: `${scaleRatio * 100}px`
+		paddingLeft: `${scaleRatio * 16}px`,
+		bottom: `${offset.yOffset - scaleRatio * 8}px`,
+		fontSize: `${scaleRatio * 110}px`
 	};
+
 	return (
 		<div id="score" className="centered-horizontally" style={style}>
 			{score}

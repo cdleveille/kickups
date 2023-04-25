@@ -3,12 +3,22 @@ import React, { CSSProperties, useState } from "react";
 interface IInitialsProps {
 	initials: string;
 	setInitials: (initials: string) => void;
+	showInitialsInput: boolean;
+	setShowInitialsInput: (showInitialsInput: boolean) => void;
+	clearScreen: () => void;
 	scaleRatio: number;
 	offset: { xOffset: number; yOffset: number };
 }
 
-export const Initials = ({ initials, setInitials, scaleRatio, offset }: IInitialsProps) => {
-	const [showInput, setShowInput] = useState(false);
+export const Initials = ({
+	initials,
+	setInitials,
+	showInitialsInput,
+	setShowInitialsInput,
+	clearScreen,
+	scaleRatio,
+	offset
+}: IInitialsProps) => {
 	const [inputValue, setInputValue] = useState("");
 
 	const onInput = (e: React.FormEvent<HTMLInputElement>) => {
@@ -31,14 +41,19 @@ export const Initials = ({ initials, setInitials, scaleRatio, offset }: IInitial
 		if (inputValue.length < 3) return;
 		setInitials(inputValue);
 		setInputValue("");
-		setShowInput(false);
+		setShowInitialsInput(false);
 	};
 
-	const initialsShowStyle: CSSProperties = {
-		fontSize: `${scaleRatio * 65}px`,
-		bottom: `${offset.yOffset + scaleRatio * 35}px`,
+	const onClick = () => {
+		clearScreen();
+		setShowInitialsInput(!showInitialsInput);
+	};
+
+	const initialsBtnStyle: CSSProperties = {
+		fontSize: `${scaleRatio * 75}px`,
+		bottom: `${offset.yOffset + scaleRatio * 25}px`,
 		left: `${offset.xOffset + scaleRatio * 40}px`,
-		padding: `${scaleRatio * 6}px`
+		padding: `${scaleRatio * 8}px`
 	};
 
 	const initialsInputLabelStyle: CSSProperties = {
@@ -57,14 +72,13 @@ export const Initials = ({ initials, setInitials, scaleRatio, offset }: IInitial
 
 	return (
 		<>
-			<div id="intitials-show" onClick={() => setShowInput(!showInput)} style={initialsShowStyle}>
-				{initials}
+			<div id="intitials-btn" onClick={onClick} style={initialsBtnStyle}>
+				{initials || "???"}
 			</div>
-			{showInput && (
+			{showInitialsInput && (
 				<form spellCheck="false" onSubmit={onSubmit}>
 					<div id="initials-input-label" className="centered-horizontally" style={initialsInputLabelStyle}>
-						{" "}
-						ENTER YOUR INITIALS:
+						ENTER&nbsp;YOUR&nbsp;INITIALS:
 					</div>
 					<input
 						id="initials-input"

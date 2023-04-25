@@ -39,7 +39,7 @@ body {
 	transform: translateX(-50%);
 }
 
-#intitials-show {
+#intitials-btn {
 	z-index: 10;
 	position: absolute;
 	color: aqua;
@@ -53,21 +53,16 @@ body {
 	color: aqua;
 	font-family: "november";
 	user-select: none;
+	pointer-events: none;
 }
 
 #initials-input {
 	z-index: 10;
 	color: #00ffff;
-	font-size: 150px;
-	width: 265px;
 	background-color: transparent;
 	outline: none;
-	border: 4px dotted aqua;
 	text-transform: uppercase;
 	font-family: "november";
-	padding-top: 16px;
-	padding-left: 16px;
-	padding-right: 16px;
 }
 
 #score {
@@ -75,4 +70,21 @@ body {
 	color: aqua;
 	user-select: none;
 	text-align: center;
+}
+
+#top-btn {
+	z-index: 10;
+	position: absolute;
+	color: aqua;
+	font-family: "november";
+	user-select: none;
+	cursor: pointer;
+}
+
+#top-list {
+	z-index: 10;
+	color: #00ffff;
+	font-family: "november";
+	user-select: none;
+	pointer-events: none;
 }

@@ -2,7 +2,6 @@ import "../css/style.css";
 
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { io } from "socket.io-client";
 
 import { Index } from "@pages";
 
@@ -24,12 +23,6 @@ window.addEventListener("load", async () => {
 		console.log("new service worker registered");
 	} else console.log("active service worker found");
 });
-
-const socket = io();
-socket.on("ping", () => {
-	console.log("socket.io: ping from server");
-});
-socket.emit("ping");
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
