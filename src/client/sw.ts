@@ -49,12 +49,7 @@ self.addEventListener("activate", (event: ExtendableEvent) => {
 });
 
 self.addEventListener("fetch", (event: FetchEvent) => {
-	event.respondWith(
-		(async () => {
-			if (isCacheFirstFile(event.request.url)) return cacheResponse(event);
-			return networkResponse(event);
-		})()
-	);
+	event.respondWith(navigator.onLine ? networkResponse(event) : cacheResponse(event));
 });
 
 const networkResponse = async (event: FetchEvent): Promise<Response> => {
@@ -75,7 +70,7 @@ const cacheResponse = async (event: FetchEvent): Promise<Response> => {
 	try {
 		const cache = await caches.open(cacheName);
 		const cacheResponse = await cache.match(event.request);
-		return cacheResponse || networkResponse(event);
+		return cacheResponse ?? networkResponse(event);
 	} catch (error) {
 		return networkResponse(event);
 	}
