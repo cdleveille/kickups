@@ -6,6 +6,8 @@ export enum Color {
 
 export const INITIALS_LOCAL_STORAGE_KEY = "initials";
 
+export const SCORES_LOCAL_STORAGE_KEY = "scores";
+
 export enum Key {
 	ESCAPE = "Escape",
 	ONE = "1",

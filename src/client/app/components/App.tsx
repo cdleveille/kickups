@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import useKeypress from "react-use-keypress";
 
 import { Game, socket } from "@app";
@@ -15,13 +15,15 @@ export const App = () => {
 	const [initials, setInitials] = useState(getLocalStorageItem<string>(INITIALS_LOCAL_STORAGE_KEY));
 	const [showInitialsInput, setShowInitialsInput] = useState(false);
 	const [showTopList, setShowTopList] = useState(false);
+	const [isOffline, setIsOffline] = useState(!navigator.onLine);
 
 	const endStreak = (score: number) => {
+		setScore(0);
+		if (isOffline) return;
 		const initials = getLocalStorageItem<string>(INITIALS_LOCAL_STORAGE_KEY);
 		if (initials && score > 0) {
 			socket.emit(SocketEvent.CLIENT_SEND_NEW_SCORE, { user: initials, score });
 		}
-		setScore(0);
 	};
 
 	const clearScreen = () => {
@@ -29,7 +31,8 @@ export const App = () => {
 		setShowTopList(false);
 	};
 
-	const [game] = useState<Game>(new Game(setScore, setScaleRatio, setOffset, endStreak, clearScreen));
+	const newGame = useCallback(() => new Game(setScore, setScaleRatio, setOffset, endStreak, clearScreen), []);
+	const [game] = useState<Game>(newGame);
 
 	useEffect(() => {
 		if (!initials) return;
@@ -55,7 +58,7 @@ export const App = () => {
 
 	return (
 		<>
-			<Canvas game={game} />
+			<Canvas game={game} setIsOffline={setIsOffline} />
 			<Initials
 				initials={initials}
 				setInitials={setInitials}
@@ -72,6 +75,7 @@ export const App = () => {
 				showTopList={showTopList}
 				setShowTopList={setShowTopList}
 				clearScreen={clearScreen}
+				isOffline={isOffline}
 			/>
 		</>
 	);

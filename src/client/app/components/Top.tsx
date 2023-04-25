@@ -1,7 +1,9 @@
 import React, { CSSProperties, useEffect, useState } from "react";
 
 import { socket } from "@app";
+import { useLocalStorage } from "@hooks";
 import { IScore, SocketEvent } from "@shared";
+import { SCORES_LOCAL_STORAGE_KEY } from "@types";
 
 interface ITopProps {
 	scaleRatio: number;
@@ -9,20 +11,32 @@ interface ITopProps {
 	showTopList: boolean;
 	setShowTopList: (showTopList: boolean) => void;
 	clearScreen: () => void;
+	isOffline: boolean;
 }
 
-export const Top = ({ scaleRatio, offset, showTopList, setShowTopList, clearScreen }: ITopProps) => {
+export const Top = ({ scaleRatio, offset, showTopList, setShowTopList, clearScreen, isOffline }: ITopProps) => {
+	const { getLocalStorageItem, setLocalStorageItem } = useLocalStorage();
 	const [scores, setScores] = useState<IScore[]>([]);
 
 	useEffect(() => {
-		socket.on(SocketEvent.SERVER_SEND_TOP_SCORES, (topScores: IScore[]) => {
-			setScores(topScores);
-		});
-		socket.emit(SocketEvent.CLIENT_REQUEST_TOP_SCORES);
+		if (isOffline) {
+			const topScores = getLocalStorageItem<IScore[]>(SCORES_LOCAL_STORAGE_KEY);
+			setScores(topScores ?? []);
+		} else {
+			socket.on(SocketEvent.SERVER_SEND_TOP_SCORES, (topScores: IScore[]) => {
+				setScores(topScores);
+			});
+			socket.emit(SocketEvent.CLIENT_REQUEST_TOP_SCORES);
+		}
 		return () => {
 			socket.off(SocketEvent.SERVER_SEND_TOP_SCORES);
 		};
-	}, []);
+	}, [isOffline]);
+
+	useEffect(() => {
+		if (isOffline) return;
+		setLocalStorageItem(SCORES_LOCAL_STORAGE_KEY, scores);
+	}, [scores]);
 
 	const topBtnStyle: CSSProperties = {
 		fontSize: `${scaleRatio * 75}px`,

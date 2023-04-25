@@ -19,12 +19,9 @@ const deleteOldCaches = async () => {
 
 deleteOldCaches();
 
-const cacheFileIdentifier = ".hash.";
+const cacheFirstFileIdentifier = ".hash.";
 
-const isCacheFirstFile = (url: string): boolean => {
-	if (url.includes(cacheFileIdentifier)) return true;
-	return false;
-};
+const isCacheFirstFile = (url: string) => url.includes(cacheFirstFileIdentifier);
 
 self.addEventListener("install", (event: ExtendableEvent) => {
 	self.skipWaiting();
@@ -87,7 +84,7 @@ const cacheResponse = async (event: FetchEvent): Promise<Response> => {
 // clean up old versions of files with hashed filenames when a new version is fetched over the network
 const trimCache = async (event: FetchEvent, cache: Cache) => {
 	if (isCacheFirstFile(event.request.url)) {
-		const prefix = event.request.url.split(cacheFileIdentifier)[0];
+		const prefix = event.request.url.split(cacheFirstFileIdentifier)[0];
 		(await cache.keys()).map(async (key: Request) => {
 			if (key.url.startsWith(prefix)) await cache.delete(key);
 		});

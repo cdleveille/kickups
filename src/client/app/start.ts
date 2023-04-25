@@ -2,10 +2,10 @@ import "../css/style.css";
 
 import { Game, InputHandler, now, WindowHandler } from "@app";
 
-export const start = async (canvas: HTMLCanvasElement, game: Game) => {
+export const start = async (canvas: HTMLCanvasElement, game: Game, setIsOffline: (isOffline: boolean) => void) => {
 	const ctx = canvas.getContext("2d");
 	new InputHandler(canvas, game);
-	new WindowHandler(canvas, game);
+	new WindowHandler(canvas, game, setIsOffline);
 	game.init();
 
 	let current: number,

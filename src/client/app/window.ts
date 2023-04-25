@@ -6,7 +6,7 @@ export class WindowHandler {
 	canvas: HTMLCanvasElement;
 	game: Game;
 
-	constructor(canvas: HTMLCanvasElement, game: Game) {
+	constructor(canvas: HTMLCanvasElement, game: Game, setIsOffline: (isOffline: boolean) => void) {
 		this.canvas = canvas;
 		this.game = game;
 
@@ -19,11 +19,11 @@ export class WindowHandler {
 		});
 
 		window.addEventListener("online", () => {
-			// game.goOnline();
+			setIsOffline(false);
 		});
 
 		window.addEventListener("offline", () => {
-			// game.goOffline();
+			setIsOffline(true);
 		});
 
 		this.resize();
