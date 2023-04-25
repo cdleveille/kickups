@@ -17,12 +17,14 @@ export class Game {
 	setScaleRatio: (scaleRatio: number) => void;
 	setOffset: (offset: { xOffset: number; yOffset: number }) => void;
 	endStreak: (score: number) => void;
+	clearScreen: () => void;
 
 	constructor(
 		setScore: (score: number) => void,
 		setScaleRatio: (scaleRatio: number) => void,
 		setOffset: (offset: { xOffset: number; yOffset: number }) => void,
-		endStreak: (score: number) => void
+		endStreak: (score: number) => void,
+		clearScreen: () => void
 	) {
 		this.ball = new Ball();
 		this.radiusRatio = 1 / 12;
@@ -33,6 +35,7 @@ export class Game {
 		this.setScaleRatio = setScaleRatio;
 		this.setOffset = setOffset;
 		this.endStreak = endStreak;
+		this.clearScreen = clearScreen;
 	}
 
 	init() {
@@ -113,6 +116,7 @@ export class Game {
 	onKick(pos: { x: number; y: number }) {
 		const { x, y } = pos;
 		if (getDistanceBetweenPoints({ x, y }, { x: this.ball.x, y: this.ball.y }) > this.ball.radius) return;
+		this.clearScreen();
 		this.ball.isStoppedVertical = false;
 		this.setScore(this.score + 1);
 		const xBoostPct = (x - this.ball.x) / this.ball.radius;

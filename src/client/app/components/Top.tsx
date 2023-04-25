@@ -38,17 +38,23 @@ export const Top = ({ scaleRatio, offset, showTopList, setShowTopList, clearScre
 
 	const topListStyle: CSSProperties = {
 		fontSize: `${scaleRatio * 65}px`,
-		top: `${offset.yOffset + scaleRatio * 35}px`
+		top: `${offset.yOffset + scaleRatio * 35}px`,
+		paddingRight: `${scaleRatio * 20}px`
 	};
 
 	const topListItemStyle: CSSProperties = {
 		marginBottom: `${scaleRatio * 8}px`
 	};
 
+	const noScoresYetStyle: CSSProperties = {
+		marginTop: `${offset.yOffset + scaleRatio * 280}px`
+	};
+
 	return (
 		<>
 			{showTopList && (
 				<div id="top-list" className="centered-horizontally" style={topListStyle}>
+					{scores.length === 0 && <div style={noScoresYetStyle}>No scores yet!</div>}
 					{scores.map((score, i) => (
 						<TopListItem
 							key={i}

@@ -10,8 +10,6 @@ export class WindowHandler {
 		this.canvas = canvas;
 		this.game = game;
 
-		screen.orientation.lock("portrait");
-
 		window.addEventListener("resize", () => {
 			this.resize();
 		});

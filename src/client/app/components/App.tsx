@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
+import useKeypress from "react-use-keypress";
 
 import { Game, socket } from "@app";
 import { Canvas, Initials, Score, Top } from "@components";
 import { useLocalStorage } from "@hooks";
 import { SocketEvent } from "@shared";
-import { INITIALS_LOCAL_STORAGE_KEY } from "@types";
+import { INITIALS_LOCAL_STORAGE_KEY, Key } from "@types";
 
 export const App = () => {
 	const { getLocalStorageItem, setLocalStorageItem } = useLocalStorage();
@@ -23,17 +24,34 @@ export const App = () => {
 		setScore(0);
 	};
 
-	const [game] = useState<Game>(new Game(setScore, setScaleRatio, setOffset, endStreak));
+	const clearScreen = () => {
+		setShowInitialsInput(false);
+		setShowTopList(false);
+	};
+
+	const [game] = useState<Game>(new Game(setScore, setScaleRatio, setOffset, endStreak, clearScreen));
 
 	useEffect(() => {
 		if (!initials) return;
 		setLocalStorageItem(INITIALS_LOCAL_STORAGE_KEY, initials);
 	}, [initials]);
 
-	const clearScreen = () => {
-		setShowInitialsInput(false);
-		setShowTopList(false);
-	};
+	useKeypress(Key.ESCAPE, e => {
+		e.preventDefault();
+		clearScreen();
+	});
+
+	useKeypress(Key.ONE, e => {
+		e.preventDefault();
+		clearScreen();
+		setShowInitialsInput(!showInitialsInput);
+	});
+
+	useKeypress(Key.TWO, e => {
+		e.preventDefault();
+		clearScreen();
+		setShowTopList(!showTopList);
+	});
 
 	return (
 		<>
