@@ -22,35 +22,57 @@ body {
 
 .centered {
 	position: absolute;
+	top: 50%;
+	left: 50%;
 	-moz-transform: translateX(-50%) translateY(-50%);
 	-webkit-transform: translateX(-50%) translateY(-50%);
 	-ms-transform: translateX(-50%) translateY(-50%);
 	transform: translateX(-50%) translateY(-50%);
 }
 
+.centered-horizontally {
+	position: absolute;
+	left: 50%;
+	-moz-transform: translateX(-50%);
+	-webkit-transform: translateX(-50%);
+	-ms-transform: translateX(-50%);
+	transform: translateX(-50%);
+}
+
+#intitials-show {
+	z-index: 10;
+	position: absolute;
+	color: aqua;
+	font-family: "november";
+	user-select: none;
+	cursor: pointer;
+}
+
+#initials-input-label {
+	z-index: 10;
+	color: aqua;
+	font-family: "november";
+	user-select: none;
+}
+
 #initials-input {
 	z-index: 10;
-	top: 50%;
-	left: 50%;
 	color: #00ffff;
-	font-size: 100px;
-	width: 182px;
-	background-color: rgba(0, 0, 0, 0);
+	font-size: 150px;
+	width: 265px;
+	background-color: transparent;
 	outline: none;
 	border: 4px dotted aqua;
 	text-transform: uppercase;
-	pointer-events: all;
 	font-family: "november";
-	padding-top: 12px;
-	padding-left: 12px;
-	padding-right: 12px;
+	padding-top: 16px;
+	padding-left: 16px;
+	padding-right: 16px;
 }
 
 #score {
 	font-family: "ride-the-fader";
-	position: absolute;
 	color: aqua;
 	user-select: none;
-	width: 101%;
 	text-align: center;
 }

@@ -13,14 +13,14 @@ export class Game {
 	mousePos: { x: number; y: number };
 	score: number;
 	setScore: (score: number) => void;
-	setScoreBottom: (bottom: number) => void;
-	setScoreFontSize: (fontSize: number) => void;
+	setScaleRatio: (scaleRatio: number) => void;
+	setOffset: (offset: { xOffset: number; yOffset: number }) => void;
 	shadow: { opacity: number; radius: number };
 
 	constructor(
 		setScore: (score: number) => void,
-		setScoreBottom: (bottom: number) => void,
-		setScoreFontSize: (fontSize: number) => void
+		setScaleRatio: (scaleRatio: number) => void,
+		setOffset: (offset: { xOffset: number; yOffset: number }) => void
 	) {
 		this.ball = new Ball();
 		this.radiusRatio = 1 / 12;
@@ -28,8 +28,8 @@ export class Game {
 			this.score = score;
 			setScore(score);
 		};
-		this.setScoreBottom = setScoreBottom;
-		this.setScoreFontSize = setScoreFontSize;
+		this.setScaleRatio = setScaleRatio;
+		this.setOffset = setOffset;
 	}
 
 	init() {
@@ -46,8 +46,8 @@ export class Game {
 		this.floorHeight = this.height / 5;
 		this.scaleRatio = this.height / 929;
 		this.ball.resize(this.width, this.radiusRatio, this.scaleRatio);
-		this.setScoreBottom(this.yOffset);
-		this.setScoreFontSize(100 * this.scaleRatio);
+		this.setScaleRatio(this.scaleRatio);
+		this.setOffset({ xOffset: this.xOffset, yOffset: this.yOffset });
 	}
 
 	update(delta: number) {

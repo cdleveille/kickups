@@ -8,4 +8,4 @@ export enum Color {
 	GREEN = "#65fc65"
 }
 
-export const INTIALS_LOCAL_STORAGE_KEY = "initials";
+export const INITIALS_LOCAL_STORAGE_KEY = "initials";
