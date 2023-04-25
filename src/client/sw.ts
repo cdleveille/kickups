@@ -19,10 +19,6 @@ const deleteOldCaches = async () => {
 
 deleteOldCaches();
 
-const cacheFirstFileIdentifier = ".hash.";
-
-const isCacheFirstFile = (url: string) => url.includes(cacheFirstFileIdentifier);
-
 self.addEventListener("install", (event: ExtendableEvent) => {
 	self.skipWaiting();
 	event.waitUntil(
@@ -57,7 +53,6 @@ const networkResponse = async (event: FetchEvent): Promise<Response> => {
 		const networkResponse = await fetch(event.request);
 		if (event.request.method === "GET" && !event.request.url.includes("socket.io")) {
 			const cache = await caches.open(cacheName);
-			await trimCache(event, cache);
 			event.waitUntil(cache.put(event.request, networkResponse.clone()));
 		}
 		return networkResponse;
@@ -75,15 +70,3 @@ const cacheResponse = async (event: FetchEvent): Promise<Response> => {
 		return networkResponse(event);
 	}
 };
-
-// clean up old versions of files with hashed filenames when a new version is fetched over the network
-const trimCache = async (event: FetchEvent, cache: Cache) => {
-	if (isCacheFirstFile(event.request.url)) {
-		const prefix = event.request.url.split(cacheFirstFileIdentifier)[0];
-		(await cache.keys()).map(async (key: Request) => {
-			if (key.url.startsWith(prefix)) await cache.delete(key);
-		});
-	}
-};
-
-export type {};

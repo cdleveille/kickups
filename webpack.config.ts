@@ -54,8 +54,8 @@ export default {
 	output: {
 		path: path.resolve(__dirname, "build/client"),
 		publicPath: "./",
-		filename: "[name].hash.[contenthash].bundle.js",
-		assetModuleFilename: "assets/[name].hash.[contenthash][ext]",
+		filename: "[name].bundle.js",
+		assetModuleFilename: "assets/[name][ext]",
 		sourceMapFilename: "[name].js.map",
 		clean: true
 	},

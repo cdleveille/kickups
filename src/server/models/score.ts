@@ -15,4 +15,4 @@ const ScoreSchema = new Schema<IScore>({
 	}
 }).add(BaseSchema);
 
-export const Score = model<IScore, IScoreModel>("Score", ScoreSchema);
+export const Score = model<IScore, IScoreModel>("Score", ScoreSchema, "kickupsScores");
