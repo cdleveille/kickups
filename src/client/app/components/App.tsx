@@ -17,7 +17,6 @@ export const App = () => {
 
 	const endStreak = (score: number) => {
 		const initials = getLocalStorageItem<string>(INITIALS_LOCAL_STORAGE_KEY);
-		console.log(initials, score);
 		if (initials && score > 0) {
 			socket.emit(SocketEvent.CLIENT_SEND_NEW_SCORE, { user: initials, score });
 		}
