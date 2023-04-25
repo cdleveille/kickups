@@ -12,7 +12,7 @@
     "format": "eslint --fix --ext .js,.jsx,.ts,.tsx . && prettier --write .",
     "build": "rimraf build && concurrently --prefix \"[{name}]\" --names \"SERVER,CLIENT\" -c \"bgBlue.bold,bgGreen.bold\" \"yarn build:server\" \"yarn build:client\"",
     "build:server": "rimraf build/server && rimraf build/shared && tsc -b ./src/server && tsc-alias",
-    "build:client": "rimraf build/client && webpack",
+    "build:client": "rimraf build/client && webpack --define-process-env-node-env production",
     "dev": "concurrently --prefix \"[{name}]\" --names \"SERVER,CLIENT\" -c \"bgBlue.bold,bgGreen.bold\" \"yarn dev:server\" \"yarn dev:client\"",
     "dev:server": "ts-node-dev --respawn --transpile-only --project ./src/server/tsconfig.json -r tsconfig-paths/register ./src/server/index.ts",
     "dev:client": "webpack watch",
