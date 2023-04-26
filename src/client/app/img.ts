@@ -1,4 +1,4 @@
-import background from "../img/background.jpg";
+import background from "../img/background.webp";
 import ball from "../img/ball.svg";
 import { loadImage } from "./util";
 

@@ -13,6 +13,7 @@ const isCacheFirstFileType = (url: string) =>
 	url.endsWith(".svg") ||
 	url.endsWith(".jpg") ||
 	url.endsWith(".jpeg") ||
+	url.endsWith(".webp") ||
 	url.endsWith(".ico") ||
 	url.endsWith(".ttf");
 
