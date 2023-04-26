@@ -61,7 +61,8 @@ export const Top = ({ scaleRatio, offset, showTopList, setShowTopList, clearScre
 	};
 
 	const noScoresYetStyle: CSSProperties = {
-		marginTop: `${scaleRatio * 280}px`
+		marginTop: `${scaleRatio * 280}px`,
+		marginLeft: `${scaleRatio * 24}px`
 	};
 
 	return (

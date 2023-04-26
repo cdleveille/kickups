@@ -90,7 +90,6 @@ export const Initials = ({
 						value={inputValue}
 						autoFocus={true}
 						style={initialsInputStyle}
-						onBlur={() => setShowInitialsInput(false)}
 					/>
 				</form>
 			)}

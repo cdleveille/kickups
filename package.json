@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "build/server/index.js",
   "repository": "https://github.com/cdleveille/kickups.git",
-  "author": "Chris Leveille <cdleveille@gmail.com>",
-  "description": "",
+  "author": "Chris Leveille",
+  "description": "How long can you keep it up?",
   "license": "MIT",
   "scripts": {
     "prepare": "husky install",
