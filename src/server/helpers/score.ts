@@ -7,6 +7,7 @@ import { IScore, TOP_SCORES_LIMIT } from "@shared";
 export const newScore = async (score: IScore, socket: Socket) => {
 	if (Config.SKIP_DB) return;
 	if (!score.user || !score.score) return;
+	if (score.score < 1 || !Number.isInteger(score.score)) return;
 	const lowestTopScore = await getLowestTopScore();
 	if (lowestTopScore && score.score < lowestTopScore) return;
 	await Score.create(score);

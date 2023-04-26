@@ -80,7 +80,12 @@ html {
 	font-family: "ride-the-fader";
 	color: aqua;
 	user-select: none;
-	text-align: center;
+}
+
+#streak-end-score {
+	font-family: "ride-the-fader";
+	color: aqua;
+	user-select: none;
 }
 
 #top-btn {

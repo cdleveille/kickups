@@ -6,15 +6,15 @@ import { IScore, SocketEvent } from "@shared";
 import { SCORES_LOCAL_STORAGE_KEY } from "@types";
 
 interface ITopProps {
-	scaleRatio: number;
-	offset: { xOffset: number; yOffset: number };
 	showTopList: boolean;
 	setShowTopList: (showTopList: boolean) => void;
 	clearScreen: () => void;
 	isOffline: boolean;
+	scaleRatio: number;
+	offset: { xOffset: number; yOffset: number };
 }
 
-export const Top = ({ scaleRatio, offset, showTopList, setShowTopList, clearScreen, isOffline }: ITopProps) => {
+export const Top = ({ showTopList, setShowTopList, clearScreen, isOffline, scaleRatio, offset }: ITopProps) => {
 	const { getLocalStorageItem, setLocalStorageItem } = useLocalStorage();
 	const [scores, setScores] = useState<IScore[]>([]);
 
