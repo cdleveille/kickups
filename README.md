@@ -18,25 +18,22 @@ How long can you keep it up?
 
 ## Local Setup
 
-### Prerequisites
+### Install Prerequisites
 
 -   [Node.js](https://nodejs.org/en/download/)
--   [Yarn](https://yarnpkg.com/) `npm i -g yarn`
+-   [Yarn](https://yarnpkg.com/): `npm i -g yarn`
 -   [Visual Studio Code](https://code.visualstudio.com/download)
 -   [Visual Studio Code Docker Extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
 -   [Docker Desktop](https://www.docker.com/)
 
-### Run
+### Prepare Project
 
 -   Install package dependencies: `yarn`
--   Build project: `yarn build`
--   Start project: `yarn start`
+-   Launch Docker Desktop. In VS Code, right-click "\.kickups-dev-container\docker-compose.yml" and select "Compose Up" to initialize database container.
 
 ### Debug
 
--   Install package dependencies: `yarn`
--   Launch Docker Desktop. In VS Code, right-click `.kickups-dev-container\docker-compose.yml` and select `Compose Up` to initialize database container.
--   Press `F5` to start debugging server (client can be debugged in browser via source maps). Server and client respectively restart automatically on file save.
+-   In VS Code, press `F5` to start debugging server (client can be debugged in browser via source maps). Server and client respectively restart automatically on file save.
 -   Client will be served on [localhost:3000](http://localhost:3000/)
 
 ## Technologies
