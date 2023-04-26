@@ -1,5 +1,11 @@
 # kickups
 
+How long can you keep it up?
+
+## Play
+
+[kickups.fly.dev](https://kickups.fly.dev)
+
 ## Prerequisites
 
 -   [Node.js](https://nodejs.org/en/download/)
