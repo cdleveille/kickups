@@ -114,9 +114,9 @@ export class Game {
 	}
 
 	onKick(pos: { x: number; y: number }) {
+		this.clearScreen();
 		const { x, y } = pos;
 		if (getDistanceBetweenPoints({ x, y }, { x: this.ball.x, y: this.ball.y }) > this.ball.radius) return;
-		this.clearScreen();
 		this.ball.isStoppedVertical = false;
 		this.setScore(this.score + 1);
 		const xBoostPct = (x - this.ball.x) / this.ball.radius;

@@ -57,8 +57,8 @@ export const Initials = ({
 	};
 
 	const initialsInputLabelStyle: CSSProperties = {
-		fontSize: `${scaleRatio * 40}px`,
-		top: `${offset.yOffset + scaleRatio * 320}px`
+		fontSize: `${scaleRatio * 65}px`,
+		top: `${offset.yOffset + scaleRatio * 300}px`
 	};
 
 	const initialsInputStyle: CSSProperties = {

@@ -69,7 +69,7 @@ export const Top = ({ scaleRatio, offset, showTopList, setShowTopList, clearScre
 		<>
 			{showTopList && (
 				<div id="top-list" className="centered-horizontally" style={topListStyle}>
-					{scores.length === 0 && <div style={noScoresYetStyle}>No&nbsp;scores&nbsp;yet!</div>}
+					{scores.length === 0 && <div style={noScoresYetStyle}>NO&nbsp;SCORES&nbsp;YET!</div>}
 					{scores.map((score, i) => (
 						<TopListItem
 							key={i}
