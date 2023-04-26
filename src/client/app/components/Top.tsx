@@ -51,8 +51,8 @@ export const Top = ({ showTopList, setShowTopList, clearScreen, isOffline, scale
 	};
 
 	const topListStyle: CSSProperties = {
-		fontSize: `${scaleRatio * 65}px`,
-		top: `${offset.yOffset + scaleRatio * 35}px`,
+		fontSize: `${scaleRatio * 55}px`,
+		top: `${offset.yOffset + scaleRatio * 144}px`,
 		paddingRight: `${scaleRatio * 28}px`
 	};
 

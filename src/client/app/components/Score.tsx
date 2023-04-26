@@ -28,7 +28,7 @@ export const Score = ({ score, streakEndScore, scaleRatio, offset }: IScoreProps
 
 	const streakEndScoreStyle: CSSProperties = {
 		paddingLeft: `${scaleRatio * 16}px`,
-		top: `${offset.yOffset + scaleRatio * 47}px`,
+		top: `${offset.yOffset}px`,
 		fontSize: `${scaleRatio * 110}px`
 	};
 
