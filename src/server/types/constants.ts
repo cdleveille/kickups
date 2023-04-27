@@ -11,5 +11,6 @@ export enum Env {
 }
 
 export enum Routes {
-	ROOT = "/"
+	ROOT = "/",
+	TOP = "/top"
 }

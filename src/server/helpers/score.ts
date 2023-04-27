@@ -21,7 +21,7 @@ export const sendTopScoresToClient = async (socket: Socket, broadcast?: boolean)
 	if (broadcast) socket.broadcast.emit("server-send-top-scores", topScores);
 };
 
-const getTopScores = async (limit: number) =>
+export const getTopScores = async (limit: number) =>
 	Score.find<IScore>({}, { user: 1, score: 1, _id: 0 }).sort({ score: -1 }).limit(limit);
 
 const getLowestTopScore = async () => {
