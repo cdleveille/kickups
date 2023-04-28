@@ -14,7 +14,7 @@ export const Score = ({ score, streakEndScore, scaleRatio, offset }: IScoreProps
 	useEffect(() => {
 		if (streakEndScore?.value <= 0) return;
 		setShowStreakEndScore(true);
-		timeoutId && clearTimeout(timeoutId);
+		if (timeoutId) clearTimeout(timeoutId);
 		const newTimeoutId = setTimeout(() => setShowStreakEndScore(false), 3000);
 		setTimeoutId(newTimeoutId);
 		return () => clearTimeout(newTimeoutId);
