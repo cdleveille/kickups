@@ -3,24 +3,35 @@ import { Socket } from "socket.io";
 
 import { Config } from "@helpers";
 import { Score } from "@models";
+import { log } from "@services";
 import { IEncryptedScore, IScore, TOP_SCORES_LIMIT } from "@shared";
 
 export const newScore = async (encryptedScore: IEncryptedScore, socket: Socket) => {
-	if (Config.SKIP_DB) return;
-	if (!encryptedScore.user || !encryptedScore.score) return;
-	const decryptedScore = parseInt(CryptoJS.AES.decrypt(encryptedScore.score, socket.id).toString(CryptoJS.enc.Utf8));
-	if (isNaN(decryptedScore) || !Number.isInteger(decryptedScore) || decryptedScore < 1) return;
-	const lowestTopScore = await getLowestTopScore();
-	if (lowestTopScore && decryptedScore < lowestTopScore) return;
-	await Score.create({ user: encryptedScore.user, score: decryptedScore } as IScore);
-	await sendTopScoresToClient(socket, true);
+	try {
+		if (Config.SKIP_DB) return;
+		if (!encryptedScore.user || !encryptedScore.score) return;
+		const decryptedScore = parseInt(
+			CryptoJS.AES.decrypt(encryptedScore.score, socket.id).toString(CryptoJS.enc.Utf8)
+		);
+		if (isNaN(decryptedScore) || !Number.isInteger(decryptedScore) || decryptedScore < 1) return;
+		const lowestTopScore = await getLowestTopScore();
+		if (lowestTopScore && decryptedScore < lowestTopScore) return;
+		await Score.create({ user: encryptedScore.user, score: decryptedScore } as IScore);
+		await sendTopScoresToClient(socket, true);
+	} catch (error) {
+		log.error({ error });
+	}
 };
 
 export const sendTopScoresToClient = async (socket: Socket, broadcast?: boolean) => {
-	if (Config.SKIP_DB) return;
-	const topScores = await getTopScores(TOP_SCORES_LIMIT);
-	socket.emit("server-send-top-scores", topScores);
-	if (broadcast) socket.broadcast.emit("server-send-top-scores", topScores);
+	try {
+		if (Config.SKIP_DB) return;
+		const topScores = await getTopScores(TOP_SCORES_LIMIT);
+		socket.emit("server-send-top-scores", topScores);
+		if (broadcast) socket.broadcast.emit("server-send-top-scores", topScores);
+	} catch (error) {
+		log.error({ error });
+	}
 };
 
 export const getTopScores = async (limit: number) =>
