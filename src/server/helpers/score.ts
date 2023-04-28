@@ -1,16 +1,18 @@
+import CryptoJS from "crypto-js";
 import { Socket } from "socket.io";
 
 import { Config } from "@helpers";
 import { Score } from "@models";
-import { IScore, TOP_SCORES_LIMIT } from "@shared";
+import { IEncryptedScore, IScore, TOP_SCORES_LIMIT } from "@shared";
 
-export const newScore = async (score: IScore, socket: Socket) => {
+export const newScore = async (encryptedScore: IEncryptedScore, socket: Socket) => {
 	if (Config.SKIP_DB) return;
-	if (!score.user || !score.score) return;
-	if (score.score < 1 || !Number.isInteger(score.score)) return;
+	if (!encryptedScore.user || !encryptedScore.score) return;
+	const decryptedScore = parseInt(CryptoJS.AES.decrypt(encryptedScore.score, socket.id).toString(CryptoJS.enc.Utf8));
+	if (isNaN(decryptedScore) || !Number.isInteger(decryptedScore) || decryptedScore < 1) return;
 	const lowestTopScore = await getLowestTopScore();
-	if (lowestTopScore && score.score < lowestTopScore) return;
-	await Score.create(score);
+	if (lowestTopScore && decryptedScore < lowestTopScore) return;
+	await Score.create({ user: encryptedScore.user, score: decryptedScore } as IScore);
 	await sendTopScoresToClient(socket, true);
 };
 

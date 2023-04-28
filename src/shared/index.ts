@@ -16,6 +16,11 @@ export interface IScore extends IBase {
 	score: number;
 }
 
+export interface IEncryptedScore {
+	user: string;
+	score: string;
+}
+
 export const TOP_SCORES_LIMIT = 10;
 
 export enum SocketEvent {

@@ -1,10 +1,11 @@
+import CryptoJS from "crypto-js";
 import React, { useCallback, useEffect, useState } from "react";
 import useKeypress from "react-use-keypress";
 
 import { Game, socket } from "@app";
 import { Canvas, Initials, Score, Top } from "@components";
 import { useLocalStorage } from "@hooks";
-import { SocketEvent } from "@shared";
+import { IEncryptedScore, SocketEvent } from "@shared";
 import { INITIALS_LOCAL_STORAGE_KEY, Key } from "@types";
 
 export const App = () => {
@@ -23,7 +24,9 @@ export const App = () => {
 		if (score <= 0) return;
 		setStreakEndScore({ value: score, switch: !streakEndScore.switch });
 		const initials = getLocalStorageItem<string>(INITIALS_LOCAL_STORAGE_KEY);
-		initials && socket.emit(SocketEvent.CLIENT_SEND_NEW_SCORE, { user: initials, score });
+		if (!initials) return;
+		const encryptedScore = CryptoJS.AES.encrypt(score.toString(), socket.id).toString();
+		socket.emit(SocketEvent.CLIENT_SEND_NEW_SCORE, { user: initials, score: encryptedScore } as IEncryptedScore);
 	};
 
 	const clearScreen = () => {
