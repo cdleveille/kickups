@@ -43,15 +43,15 @@ export class WindowHandler {
 		const heightUsingMaxWidth = Math.floor(window.innerWidth * (heightRatio / widthRatio));
 		if (heightUsingMaxWidth <= window.innerHeight)
 			return {
-				width: window.innerWidth,
-				height: heightUsingMaxWidth,
+				width: Math.max(window.innerWidth, 3),
+				height: Math.max(heightUsingMaxWidth, 4),
 				xOffset: 0,
 				yOffset: (window.innerHeight - heightUsingMaxWidth) / 2
 			} as IResize;
 		const widthUsingMaxHeight = Math.floor(window.innerHeight * (widthRatio / heightRatio));
 		return {
-			width: widthUsingMaxHeight,
-			height: window.innerHeight,
+			width: Math.max(widthUsingMaxHeight, 3),
+			height: Math.max(window.innerHeight, 4),
 			xOffset: (window.innerWidth - widthUsingMaxHeight) / 2,
 			yOffset: 0
 		} as IResize;
