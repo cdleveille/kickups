@@ -17,3 +17,5 @@ export const loadImage = (url: string) => {
 };
 
 export const socket = io();
+
+export const isFirefox = navigator?.userAgent?.search("Firefox") > -1;
