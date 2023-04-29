@@ -57,7 +57,7 @@ export class Game {
 	}
 
 	update(delta: number) {
-		this.ball.update(delta);
+		this.ball.update(delta, this.scaleRatio);
 		this.checkForHover();
 		this.checkForCollisions(this.ball, delta);
 		this.updateShadow();
@@ -76,6 +76,7 @@ export class Game {
 	}
 
 	checkForCollisions(ball: Ball, delta: number) {
+		if (this.ball.isStopped) ball.y = this.height - this.floorHeight - ball.radius;
 		if (this.isBallCollidingWithFloor(ball)) {
 			if (this.score > 0) {
 				this.endStreak(this.score);
@@ -83,12 +84,12 @@ export class Game {
 			}
 			ball.y = this.height - this.floorHeight - ball.radius;
 
-			if (!this.ball.isStoppedVertical) {
-				if (ball.yv > 20 * this.scaleRatio) {
+			if (!this.ball.isStopped) {
+				if (ball.yv > 80 * this.scaleRatio) {
 					ball.yv = -ball.yv * ball.bounceRatio;
 				} else {
 					ball.yv = 0;
-					this.ball.isStoppedVertical = true;
+					if (ball.xv === 0) this.ball.isStopped = true;
 				}
 			}
 			if (ball.xv > 0) {
@@ -117,7 +118,7 @@ export class Game {
 		this.clearScreen();
 		const { x, y } = pos;
 		if (getDistanceBetweenPoints({ x, y }, { x: this.ball.x, y: this.ball.y }) > this.ball.radius) return;
-		this.ball.isStoppedVertical = false;
+		this.ball.isStopped = false;
 		this.setScore(this.score + 1);
 		const xBoostPct = (x - this.ball.x) / this.ball.radius;
 		const yBoostPct = (y - this.ball.y + this.ball.radius) / (this.ball.radius * 2);

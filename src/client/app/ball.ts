@@ -11,7 +11,7 @@ export class Ball {
 	rollDecel: number;
 	rotationRate: number;
 	rotationMagnitude: number;
-	isStoppedVertical: boolean;
+	isStopped: boolean;
 
 	constructor() {
 		this.bounceRatio = 0.75;
@@ -23,7 +23,7 @@ export class Ball {
 		this.xv = 0;
 		this.yv = 0;
 		this.rotationMagnitude = 0;
-		this.isStoppedVertical = true;
+		this.isStopped = true;
 	}
 
 	resize(newWidth: number, radiusRatio: number, scaleRatio: number) {
@@ -32,18 +32,18 @@ export class Ball {
 		this.radius = newWidth * radiusRatio;
 		this.x *= ratio;
 		this.y *= ratio;
-		this.xv *= scaleRatio;
-		this.yv *= scaleRatio;
+		this.xv *= ratio;
+		this.yv *= ratio;
 		this.g = 4000 * scaleRatio;
 		this.rollDecel = 500 * scaleRatio;
-		this.rotationRate = 0.01;
+		this.rotationRate = 0.0085;
 	}
 
-	update(delta: number) {
-		if (!this.isStoppedVertical) this.yv += this.g * delta;
-		this.x += this.xv * delta;
+	update(delta: number, scaleRatio: number) {
+		if (!this.isStopped) this.yv += this.g * delta;
 		this.y += this.yv * delta;
-		this.rotationMagnitude = this.rotationMagnitude + this.rotationRate * this.xv * delta;
+		this.x += this.xv * delta;
+		this.rotationMagnitude = this.rotationMagnitude + this.rotationRate * (this.xv / scaleRatio) * delta;
 	}
 
 	draw(ctx: CanvasRenderingContext2D, offsetX: number, offsetY: number) {
