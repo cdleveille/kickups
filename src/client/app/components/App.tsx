@@ -19,13 +19,14 @@ export const App = () => {
 	const [showTopList, setShowTopList] = useState(false);
 	const [isOffline, setIsOffline] = useState(!navigator.onLine);
 
-	const endStreak = (score: number) => {
+	const endStreak = (gameScore: number) => {
 		setScore(0);
-		if (score <= 0) return;
-		setStreakEndScore({ value: score, switch: !streakEndScore.switch });
+		if (gameScore <= 0) return;
+		setStreakEndScore({ value: gameScore, switch: !streakEndScore.switch });
+		if (isOffline) return;
 		const initials = getLocalStorageItem<string>(INITIALS_LOCAL_STORAGE_KEY);
-		if (!initials || isOffline) return;
-		const encryptedScore = CryptoJS.AES.encrypt(score.toString(), socket.id).toString();
+		if (!initials) return;
+		const encryptedScore = CryptoJS.AES.encrypt(gameScore.toString(), socket.id).toString();
 		socket.emit(SocketEvent.CLIENT_SEND_NEW_SCORE, { user: initials, score: encryptedScore } as IEncryptedScore);
 	};
 

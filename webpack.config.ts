@@ -53,12 +53,6 @@ export default {
 		sourceMapFilename: "[name].js.map",
 		clean: true
 	},
-	devServer: {
-		historyApiFallback: true,
-		static: {
-			directory: path.join(__dirname, "./")
-		}
-	},
 	resolve: {
 		extensions: [".ts", ".tsx", ".js", ".jsx"],
 		alias: {
