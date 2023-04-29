@@ -36,7 +36,7 @@ export class Ball {
 		this.yv *= ratio;
 		this.g = 4000 * scaleRatio;
 		this.rollDecel = 500 * scaleRatio;
-		this.rotationRate = 0.0085;
+		this.rotationRate = 0.009;
 	}
 
 	update(delta: number, scaleRatio: number) {
