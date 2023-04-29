@@ -35,7 +35,7 @@ export const App = () => {
 	};
 
 	const newGame = useCallback(() => new Game(setScore, setScaleRatio, setOffset, endStreak, clearScreen), []);
-	const [game] = useState<Game>(newGame);
+	const [game] = useState(newGame);
 
 	useEffect(() => {
 		if (!initials) return;
