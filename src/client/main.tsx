@@ -1,5 +1,7 @@
 /// <reference lib="dom" />
 
+import "./style.css";
+
 import { createRoot } from "react-dom/client";
 
 import { App } from "@components";

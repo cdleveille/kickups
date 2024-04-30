@@ -1,4 +1,5 @@
 import { BuildConfig } from "bun";
+import copy from "bun-copy-plugin";
 import { minify } from "minify";
 import { rimraf } from "rimraf";
 
@@ -31,7 +32,13 @@ try {
 			naming: {
 				entry: `${ROOT_DIR}/[dir]/[name]~[hash].[ext]`,
 				asset: "[dir]/[name].[ext]"
-			}
+			},
+			plugins: [
+				copy(`${SRC_DIR}/assets/`, `${OUT_DIR}/assets/`),
+				copy(`${SRC_DIR}/browserconfig.xml`, `${OUT_DIR}/browserconfig.xml`),
+				copy(`${SRC_DIR}/index.html`, `${OUT_DIR}/index.html`),
+				copy(`${SRC_DIR}/manifest.json`, `${OUT_DIR}/manifest.json`)
+			]
 		});
 
 	const buildSw = () =>
@@ -40,30 +47,14 @@ try {
 			entrypoints: [`${SRC_DIR}/sw.ts`]
 		});
 
-	const copyFiles = () =>
-		Bun.build({
-			...buildCommon,
-			entrypoints: [`${SRC_DIR}/copy.ts`],
-			naming: {
-				asset: "[dir]/[name].[ext]"
-			},
-			loader: {
-				".json": "file"
-			}
-		});
-
-	const [{ outputs: mainOutputs }, { outputs: copyOutputs }] = await Promise.all([
-		buildMain(),
-		copyFiles(),
-		buildSw()
-	]);
+	const [{ outputs: mainOutputs }] = await Promise.all([buildMain(), buildSw()]);
 
 	const jsFile = mainOutputs.find(output => output.path.endsWith(".js"));
 	if (!jsFile) throw "No .js file found in build output";
 	const jsFilePathSplit = jsFile.path.split("/");
 	const jsFileName = jsFilePathSplit[jsFilePathSplit.length - 1];
 
-	const cssFile = copyOutputs.find(output => output.path.endsWith(".css"));
+	const cssFile = mainOutputs.find(output => output.path.endsWith(".css"));
 	if (!cssFile) throw "No .css file found in build output";
 	const cssFilePathSplit = cssFile.path.split("/");
 	const cssFileName = cssFilePathSplit[cssFilePathSplit.length - 1];
