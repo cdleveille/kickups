@@ -1,0 +1,112 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	-webkit-user-select: none;
+	-webkit-touch-callout: none;
+	-webkit-text-size-adjust: none;
+	text-size-adjust: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+@font-face {
+	font-family: "ride-the-fader";
+	font-style: "normal";
+	src:
+		local("ride-the-fader"),
+		url("assets/fonts/RideTheFader-1XKg.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "november";
+	font-style: "normal";
+	src:
+		local("november"),
+		url("assets/fonts/november.ttf") format("truetype");
+}
+
+body,
+html {
+	overflow: hidden;
+	height: 100%;
+	width: 100%;
+	position: fixed;
+}
+
+.centered {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-moz-transform: translateX(-50%) translateY(-50%);
+	-webkit-transform: translateX(-50%) translateY(-50%);
+	-ms-transform: translateX(-50%) translateY(-50%);
+	transform: translateX(-50%) translateY(-50%);
+}
+
+.centered-horizontally {
+	position: absolute;
+	left: 50%;
+	-moz-transform: translateX(-50%);
+	-webkit-transform: translateX(-50%);
+	-ms-transform: translateX(-50%);
+	transform: translateX(-50%);
+}
+
+#intitials-btn {
+	z-index: 10;
+	position: absolute;
+	color: aqua;
+	font-family: "november";
+	user-select: none;
+	cursor: pointer;
+}
+
+#initials-input-label {
+	z-index: 10;
+	color: aqua;
+	font-family: "november";
+	user-select: none;
+	pointer-events: none;
+}
+
+#initials-input {
+	z-index: 10;
+	color: #00ffff;
+	background-color: transparent;
+	outline: none;
+	text-transform: uppercase;
+	font-family: "november";
+}
+
+#score {
+	font-family: "ride-the-fader";
+	color: aqua;
+	user-select: none;
+	pointer-events: none;
+}
+
+#streak-end-score {
+	font-family: "ride-the-fader";
+	color: aqua;
+	user-select: none;
+	pointer-events: none;
+}
+
+#top-btn {
+	z-index: 10;
+	position: absolute;
+	color: aqua;
+	font-family: "november";
+	user-select: none;
+	cursor: pointer;
+}
+
+#top-list {
+	z-index: 10;
+	color: #00ffff;
+	font-family: "november";
+	user-select: none;
+	pointer-events: none;
+}

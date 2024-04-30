@@ -1,15 +1,14 @@
 version: "3.6"
 
 services:
-  # mongo service
   kickups-mongodb-local:
     image: mongo:latest
     container_name: kickups-mongodb-local
-    command: mongod --port 27057
+    command: mongod --port 27017
     ports:
-      - 27057:27057
+      - 27017:27017
     expose:
-      - 27057
+      - 27017
     volumes:
       - mongo-data:/data/db
     networks:

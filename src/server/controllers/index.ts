@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response, Router } from "express";
 
 import { getTopScores } from "@helpers";
-import { TOP_SCORES_LIMIT } from "@shared";
-import { Routes } from "@types";
+import { Routes, TOP_SCORES_LIMIT } from "@types";
 
 export const router = Router();
 
@@ -16,3 +15,4 @@ router.get(Routes.TOP, async (req: Request, res: Response, next: NextFunction) =
 		next(error);
 	}
 });
+

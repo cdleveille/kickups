@@ -4,7 +4,7 @@ import { Socket } from "socket.io";
 import { Config } from "@helpers";
 import { Score } from "@models";
 import { log } from "@services";
-import { IEncryptedScore, IScore, TOP_SCORES_LIMIT } from "@shared";
+import { IEncryptedScore, IScore, TOP_SCORES_LIMIT } from "@types";
 
 export const newScore = async (encryptedScore: IEncryptedScore, socket: Socket) => {
 	try {

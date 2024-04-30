@@ -1,0 +1,32 @@
+// import files here to copy them to the public folder on build
+
+import "./manifest.json";
+import "./index.html";
+import "./style.css";
+import "./favicon.ico";
+import "./browserconfig.xml";
+import "./assets/fonts/november.ttf";
+import "./assets/fonts/RideTheFader-1XKg.ttf";
+import "./assets/icons/favicon.svg";
+import "./assets/icons/icon-16x16.png";
+import "./assets/icons/icon-32x32.png";
+import "./assets/icons/icon-36x36.png";
+import "./assets/icons/icon-48x48.png";
+import "./assets/icons/icon-72x72.png";
+import "./assets/icons/icon-96x96.png";
+import "./assets/icons/icon-128x128.png";
+import "./assets/icons/icon-144x144.png";
+import "./assets/icons/icon-152x152.png";
+import "./assets/icons/icon-192x192.png";
+import "./assets/icons/icon-256x256.png";
+import "./assets/icons/icon-384x384.png";
+import "./assets/icons/icon-512x512.png";
+import "./assets/icons/icon-apple-touch-180x180.png";
+import "./assets/icons/icon-apple-touch-512x512.png";
+import "./assets/icons/icon-maskable-192x192.png";
+import "./assets/icons/icon-maskable-512x512.png";
+import "./assets/icons/mstile-144x144.png";
+import "./assets/icons/mstile-150x150.png";
+import "./assets/icons/mstile-310x150.png";
+import "./assets/icons/mstile-310x310.png";
+import "./assets/icons/safari-pinned-tab.svg";
