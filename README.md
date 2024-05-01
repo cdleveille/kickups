@@ -2,11 +2,9 @@
 
 How long can you keep it up?
 
-![image](https://github.com/cdleveille/kickups/assets/1410481/6dbb18b7-6819-4252-94d5-d8e2f719d0ec)
-
-## Play
-
 [kickups.fly.dev](https://kickups.fly.dev)
+
+![image](https://github.com/cdleveille/kickups/assets/1410481/6dbb18b7-6819-4252-94d5-d8e2f719d0ec)
 
 ## Browser Support
 
