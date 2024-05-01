@@ -1,7 +1,7 @@
 import { BuildConfig } from "bun";
 import copy from "bun-copy-plugin";
 import { minify } from "minify";
-import { rimraf } from "rimraf";
+import { rimrafSync } from "rimraf";
 
 const parseArg = (arg: string) => Bun.argv.find(a => a.startsWith(arg))?.split("=")[1];
 
@@ -10,15 +10,14 @@ try {
 
 	const BUN_ENV = parseArg("BUN_ENV");
 	const IS_PROD = BUN_ENV === "production" || Bun.env.BUN_ENV === "production";
+	const SRC_DIR = "./src/client";
+	const OUT_DIR = "./public";
 
-	const ROOT_DIR = "src/client";
-	const SRC_DIR = "src/client";
-	const OUT_DIR = "public";
-
-	await rimraf(OUT_DIR);
+	// clear output folder
+	rimrafSync(OUT_DIR);
 
 	const buildCommon = {
-		root: ROOT_DIR,
+		root: SRC_DIR,
 		outdir: OUT_DIR,
 		target: "browser",
 		sourcemap: IS_PROD ? "none" : "inline",
@@ -30,7 +29,7 @@ try {
 			...buildCommon,
 			entrypoints: [`${SRC_DIR}/main.tsx`],
 			naming: {
-				entry: `${ROOT_DIR}/[dir]/[name]~[hash].[ext]`,
+				entry: `${SRC_DIR}/[dir]/[name]~[hash].[ext]`,
 				asset: "[dir]/[name].[ext]"
 			},
 			plugins: [
@@ -47,31 +46,41 @@ try {
 			entrypoints: [`${SRC_DIR}/sw.ts`]
 		});
 
-	const [{ outputs: mainOutputs }] = await Promise.all([buildMain(), buildSw()]);
+	// execute build
+	const results = await Promise.all([buildMain(), buildSw()]);
 
+	// check for errors
+	for (const result of results) {
+		if (!result.success) throw result.logs;
+	}
+
+	// find filenames of .js file and .css file in output
+	const { outputs: mainOutputs } = results[0];
 	const jsFile = mainOutputs.find(output => output.path.endsWith(".js"));
 	if (!jsFile) throw "No .js file found in build output";
 	const jsFilePathSplit = jsFile.path.split("/");
 	const jsFileName = jsFilePathSplit[jsFilePathSplit.length - 1];
-
 	const cssFile = mainOutputs.find(output => output.path.endsWith(".css"));
 	if (!cssFile) throw "No .css file found in build output";
 	const cssFilePathSplit = cssFile.path.split("/");
 	const cssFileName = cssFilePathSplit[cssFilePathSplit.length - 1];
 
+	// inject .js and .css filenames into index.html
 	const indexHtmlContents = await Bun.file(`${OUT_DIR}/index.html`).text();
 	const indexHtmlContentsReplaced = indexHtmlContents.replace("{js}", jsFileName).replace("{css}", cssFileName);
+
+	// remove script tag for 'reload' package in production
 	const indexHtmlContentsReplacedFinal = IS_PROD
 		? indexHtmlContentsReplaced.replace('<script type="text/javascript" src="/reload/reload.js"></script>', "")
 		: indexHtmlContentsReplaced;
 
 	await Promise.all([
 		Bun.write(`${OUT_DIR}/index.html`, indexHtmlContentsReplacedFinal),
-		Bun.write(`${OUT_DIR}/${jsFileName}`, Bun.file(jsFile.path)),
-		rimraf([`${OUT_DIR}/src`, `${OUT_DIR}/copy.js`])
+		Bun.write(`${OUT_DIR}/${jsFileName}`, Bun.file(jsFile.path))
 	]);
 
 	if (IS_PROD) {
+		// minify html and css files in production
 		const [minifiedHtml, minifiedCss] = await Promise.all([minify(`${OUT_DIR}/index.html`), minify(cssFile.path)]);
 		await Promise.all([Bun.write(`${OUT_DIR}/index.html`, minifiedHtml), Bun.write(cssFile.path, minifiedCss)]);
 	} else {
@@ -82,6 +91,5 @@ try {
 
 	console.log(`Build complete in ${Date.now() - start}ms`);
 } catch (error) {
-	console.error(`Build error: ${error}`);
-	throw error;
+	console.error(error);
 }

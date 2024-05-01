@@ -20,6 +20,7 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
+      "@assets": ["src/client/assets"],
       "@components": ["src/client/components"],
       "@controllers": ["src/server/controllers"],
       "@game": ["src/client/game"],

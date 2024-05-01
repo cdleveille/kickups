@@ -1,10 +1,6 @@
+import { backgroundImg } from "@assets";
 import { Ball, getDistanceBetweenPoints } from "@game";
 import { Color, IResize } from "@types";
-
-import background from "../assets/background.webp";
-import { loadImage } from "./util";
-
-const backgroundImg = loadImage(background);
 
 export class Game {
 	width: number;

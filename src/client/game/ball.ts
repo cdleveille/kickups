@@ -1,7 +1,4 @@
-import ballSvg from "../assets/ball.svg";
-import { loadImage } from "./util";
-
-const ballImg = loadImage(ballSvg);
+import { ballImg } from "@assets";
 
 export class Ball {
 	x: number;
