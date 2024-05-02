@@ -1,8 +1,6 @@
 import { useCallback } from "react";
 
-import { Game } from "@game";
-
-import { start } from "../game/start";
+import { Game, start } from "@game";
 
 interface ICanvasProps {
 	game: Game;

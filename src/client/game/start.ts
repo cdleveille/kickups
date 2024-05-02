@@ -1,8 +1,4 @@
-import { Game } from "@game";
-
-import { InputHandler } from "./input";
-import { now } from "./util";
-import { WindowHandler } from "./window";
+import { Game, InputHandler, now, WindowHandler } from "@game";
 
 export const start = async (canvas: HTMLCanvasElement, game: Game, setIsOffline: (isOffline: boolean) => void) => {
 	const ctx = canvas.getContext("2d");

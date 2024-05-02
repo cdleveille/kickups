@@ -5,9 +5,7 @@ import useKeypress from "react-use-keypress";
 import { Canvas, Initials, Score, Top } from "@components";
 import { Game } from "@game";
 import { useLocalStorage, useSocket } from "@hooks";
-
-import { IEncryptedScore } from "../../server/types/abstract";
-import { INITIALS_LOCAL_STORAGE_KEY, Key, SocketEvent } from "../../server/types/constant";
+import { IEncryptedScore, INITIALS_LOCAL_STORAGE_KEY, Key, SocketEvent } from "@types";
 
 export const App = () => {
 	const { getLocalStorageItem, setLocalStorageItem } = useLocalStorage();
