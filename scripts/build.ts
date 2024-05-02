@@ -79,6 +79,8 @@ try {
 		Bun.write(`${OUT_DIR}/${jsFileName}`, Bun.file(jsFile.path))
 	]);
 
+	rimrafSync(`${OUT_DIR}/src`);
+
 	if (IS_PROD) {
 		// minify html and css files in production
 		const [minifiedHtml, minifiedCss] = await Promise.all([minify(`${OUT_DIR}/index.html`), minify(cssFile.path)]);
